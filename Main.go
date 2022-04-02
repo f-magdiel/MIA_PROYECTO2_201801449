@@ -1,6 +1,8 @@
 package main
 
 import (
+	Analisis "MIA_PROYECTO2_201801449/Analizador"
+
 	"bufio"
 	"fmt"
 	"os"
@@ -15,15 +17,15 @@ func main() {
 		fmt.Println("|  MANEJO E IMPLEMETANCION DE ARCHIVOS  |")
 		fmt.Println("|  FRANCISCO MAGDIEL ASICONA MATEO      |")
 		fmt.Println("|  PRIMER SEMESTRE 2022                 |")
-		fmt.Println("------------------------------------------")
+		fmt.Println("-----------------------------------------")
 		fmt.Print("COMANDO >> ")
 		lector := bufio.NewReader(os.Stdin)   // para leer la cadena de string
 		comando, _ := lector.ReadString('\n') // lee cada caracter
-		if strings.Compare(comando, "salir") == 0 {
+		if strings.Compare(comando, "salir\n") == 0 || strings.Compare(comando, "SALIR\n") == 0 {
 			salir = false
 			fmt.Println("Se detuvo el programa...")
 		} else {
-			fmt.Println("analizando....")
+			Analisis.AnalizadorComando(comando)
 		}
 	}
 
