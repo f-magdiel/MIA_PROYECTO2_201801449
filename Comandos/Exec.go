@@ -1,6 +1,7 @@
 package Comandos
 
 import (
+	"MIA_PROYECTO2_201801449/Archivo"
 	"fmt"
 	"strings"
 )
@@ -59,4 +60,6 @@ func AnalisisExec(comando string) {
 			fmt.Println("Valor: " + path_exec)
 		}
 	}
+	//se manda el path y se lee el archivo
+	Archivo.LeerArchivo(path_exec)
 }
