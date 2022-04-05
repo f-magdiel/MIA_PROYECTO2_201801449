@@ -1,8 +1,6 @@
 package main
 
 import (
-	Analisis "MIA_PROYECTO2_201801449/Analizador"
-
 	"bufio"
 	"fmt"
 	"os"
@@ -25,7 +23,7 @@ func main() {
 			salir = false
 			fmt.Println("Se detuvo el programa...")
 		} else {
-			Analisis.AnalizadorComando(comando)
+			AnalizadorComando(comando)
 		}
 	}
 

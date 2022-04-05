@@ -1,8 +1,7 @@
-package Archivo
+package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -23,7 +22,7 @@ func LeerArchivo(path string) {
 		if len(linea) != 0 {
 			newline := strings.Split(linea, "")
 			if strings.Compare(newline[0], "#") != 0 { // si es un comentario se omite
-				fmt.Println(linea)
+				AnalizadorComando(linea)
 			}
 		}
 

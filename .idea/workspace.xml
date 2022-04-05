@@ -38,6 +38,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable..is.expanded" value="true" />
+    <property name="configurable.GoLibrariesConfigurable.is.expanded" value="true" />
     <property name="go.format.on.save.advertiser.fired" value="true" />
     <property name="go.formatter.settings.were.checked" value="true" />
     <property name="go.import.settings.migrated" value="true" />
@@ -48,8 +50,24 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="goland.project.structure" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/App" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build Main.go">
+    <configuration name="go build MIA_PROYECTO2_201801449" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="MIA_PROYECTO2_201801449" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <package value="MIA_PROYECTO2_201801449" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build Main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="MIA_PROYECTO2_201801449" />
       <working_directory value="$PROJECT_DIR$" />
@@ -59,9 +77,16 @@
       <filePath value="$PROJECT_DIR$/Main.go" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Go Build.go build MIA_PROYECTO2_201801449" />
+      <item itemvalue="Go Build.go build Main.go" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build Main.go" />
+        <item itemvalue="Go Build.go build MIA_PROYECTO2_201801449" />
+        <item itemvalue="Go Build.go build MIA_PROYECTO2_201801449" />
+        <item itemvalue="Go Build.go build MIA_PROYECTO2_201801449" />
       </list>
     </recent_temporary>
   </component>
