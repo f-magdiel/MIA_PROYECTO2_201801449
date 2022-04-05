@@ -22,6 +22,7 @@ func LeerArchivo(path string) {
 		if len(linea) != 0 {
 			newline := strings.Split(linea, "")
 			if strings.Compare(newline[0], "#") != 0 { // si es un comentario se omite
+				linea += "\n"
 				AnalizadorComando(linea)
 			}
 		}

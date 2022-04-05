@@ -6,12 +6,12 @@ import (
 )
 
 func AnalizadorComando(comando string) {
-	fmt.Println("Comando entrada " + comando)
 
 	lineacomando := "" // donde se guarda el primer comando
 	contador := 0      //contador general para recorrer el comando
 	comandosep := strings.Split(comando, "")
-
+	fmt.Println(len(comandosep))
+	fmt.Println(comandosep)
 	//comprube si viene vacio el comando
 	if strings.Compare(comandosep[0], "\n") == 0 {
 		fmt.Println("Error -> Comando vacio")
@@ -21,14 +21,10 @@ func AnalizadorComando(comando string) {
 		for strings.Compare(comandosep[contador], "\n") != 0 { // si no viene vacio -> \n
 
 			if strings.Compare(comandosep[contador], " ") == 0 { // si viene espacio
-
 				break
 			} else {
 				lineacomando += strings.ToLower(comandosep[contador]) // va concatenando cada char del comando
 				contador++
-				if strings.Compare(lineacomando, "pause") == 0 {
-					break
-				}
 
 			}
 
