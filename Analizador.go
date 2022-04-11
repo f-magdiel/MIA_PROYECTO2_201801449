@@ -10,15 +10,14 @@ func AnalizadorComando(comando string) {
 	lineacomando := "" // donde se guarda el primer comando
 	contador := 0      //contador general para recorrer el comando
 	comandosep := strings.Split(comando, "")
-	fmt.Println(len(comandosep))
-	fmt.Println(comandosep)
+
 	//comprube si viene vacio el comando
 	if strings.Compare(comandosep[0], "\n") == 0 {
 		fmt.Println("Error -> Comando vacio")
 	} else {
 		//simula un while
 
-		for strings.Compare(comandosep[contador], "\n") != 0 { // si no viene vacio -> \n
+		for strings.Compare(comandosep[contador], "*") != 0 { // si no viene vacio -> \n
 
 			if strings.Compare(comandosep[contador], " ") == 0 { // si viene espacio
 				break
@@ -35,7 +34,7 @@ func AnalizadorComando(comando string) {
 		//fmt.Println("Entro " + lineacomando)
 		AnalisisExec(comando)
 	} else if strings.Compare(lineacomando, "mkdisk") == 0 {
-		fmt.Println("Entro " + lineacomando)
+		AnalisiMkdisk(comando)
 	} else if strings.Compare(lineacomando, "rmdisk") == 0 {
 		fmt.Println("Entro " + lineacomando)
 	} else if strings.Compare(lineacomando, "fdisk") == 0 {
