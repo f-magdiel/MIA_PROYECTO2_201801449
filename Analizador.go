@@ -17,7 +17,7 @@ func AnalizadorComando(comando string) {
 	} else {
 		//simula un while
 
-		for strings.Compare(comandosep[contador], "*") != 0 { // si no viene vacio -> \n
+		for strings.Compare(comandosep[contador], "\n") != 0 { // si no viene vacio -> \n
 
 			if strings.Compare(comandosep[contador], " ") == 0 { // si viene espacio
 				break
@@ -35,6 +35,7 @@ func AnalizadorComando(comando string) {
 		AnalisisExec(comando)
 	} else if strings.Compare(lineacomando, "mkdisk") == 0 {
 		AnalisiMkdisk(comando)
+
 	} else if strings.Compare(lineacomando, "rmdisk") == 0 {
 		fmt.Println("Entro " + lineacomando)
 	} else if strings.Compare(lineacomando, "fdisk") == 0 {

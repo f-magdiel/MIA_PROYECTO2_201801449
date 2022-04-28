@@ -1,18 +1,18 @@
 package main
 
-type mbr struct {
-	mbr_tamano         int64
-	mbr_fecha_creacion [16]byte
-	mbr_dsk_signature  int64
-	dsk_fit            [2]byte
-	partition          [4]particion
+type Mbr struct {
+	Mbr_tamano         int64
+	Mbr_fecha_creacion [16]byte
+	Mbr_dsk_signature  int64
+	Dsk_fit            [2]byte
+	Partition          [4]Particion
 }
 
-type particion struct {
-	part_status byte
-	part_type   byte
-	part_fit    [2]byte
-	part_start  int64
-	part_size   int64
-	part_name   [16]byte
+type Particion struct {
+	Part_status byte
+	Part_type   byte
+	Part_fit    [2]byte
+	Part_start  int64
+	Part_size   int64
+	Part_name   [16]byte
 }
