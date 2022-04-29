@@ -9,7 +9,7 @@ import (
 )
 
 func AnalisisRmdisk(comando string) {
-	fmt.Println("analisa rmdisk")
+
 	var lineacomand [100]string
 	newcomando := strings.Split(comando, "")
 	lineacomando := ""
@@ -52,7 +52,7 @@ func AnalisisRmdisk(comando string) {
 
 			//simula in while
 			if strings.Compare(lineacomand[contador], "\"") == 0 {
-				fmt.Println("Comilla doble")
+
 				contador++
 				//simula otro while
 				for strings.Compare(lineacomand[contador], "\n") != 0 {
@@ -64,7 +64,7 @@ func AnalisisRmdisk(comando string) {
 					}
 				}
 			} else {
-				fmt.Println("Sin Comilla doble")
+
 				if strings.Compare(lineacomand[contador], " ") == 0 || strings.Compare(lineacomand[contador], "\n") == 0 {
 					break
 				} else {
@@ -73,7 +73,7 @@ func AnalisisRmdisk(comando string) {
 				}
 			}
 
-			fmt.Println("Valor: -" + valor_path + "-")
+			fmt.Println("Valor: " + valor_path)
 		}
 	}
 
