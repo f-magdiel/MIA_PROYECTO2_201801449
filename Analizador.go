@@ -31,13 +31,14 @@ func AnalizadorComando(comando string) {
 	}
 
 	if strings.Compare(lineacomando, "exec") == 0 {
-		//fmt.Println("Entro " + lineacomando)
 		AnalisisExec(comando)
+
 	} else if strings.Compare(lineacomando, "mkdisk") == 0 {
 		AnalisiMkdisk(comando)
 
 	} else if strings.Compare(lineacomando, "rmdisk") == 0 {
-		fmt.Println("Entro " + lineacomando)
+		AnalisisRmdisk(comando)
+
 	} else if strings.Compare(lineacomando, "fdisk") == 0 {
 		fmt.Println("Entro " + lineacomando)
 	} else if strings.Compare(lineacomando, "mount") == 0 {

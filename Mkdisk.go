@@ -278,7 +278,7 @@ func crearDisco(_flag_size bool, _flag_unit bool, _flag_path bool, _flag_fit boo
 		copy(disco.Mbr_fecha_creacion[:], fechareal)
 
 		//datos a escribir
-		fmt.Println("----------A ESCRIBIR-------------")
+		/* fmt.Println("----------A ESCRIBIR-------------")
 		fmt.Println("Tam: ", disco.Mbr_tamano)
 		fmt.Println("Sig: ", disco.Mbr_dsk_signature)
 		fmt.Println("Date: ", disco.Mbr_fecha_creacion)
@@ -289,7 +289,7 @@ func crearDisco(_flag_size bool, _flag_unit bool, _flag_path bool, _flag_fit boo
 			fmt.Println("Par Size: ", disco.Partition[i].Part_size)
 			fmt.Println("Par Type: ", disco.Partition[i].Part_type)
 		}
-		fmt.Println("---------------------------------")
+		fmt.Println("---------------------------------") */
 		//para empezar a escribir el mbr desde el principio
 		file.Seek(0, 0)
 		//escribir el mbr
@@ -331,7 +331,7 @@ func LeerDisco(path string) {
 		}
 
 	}
-	fmt.Println("------------LEER--------------")
+	/* fmt.Println("------------LEER--------------")
 	tam := int64(m.Mbr_tamano)
 	fmt.Println("Tamaño: ", tam)
 	dsk := int64(m.Mbr_dsk_signature)
@@ -340,7 +340,7 @@ func LeerDisco(path string) {
 	fmt.Println("Fit: ", fit)
 	fech := string(m.Mbr_fecha_creacion[:])
 	fmt.Println("Fecha: ", fech)
-	fmt.Println("------------------------------")
+	fmt.Println("------------------------------") */
 	file.Close()
 
 }
