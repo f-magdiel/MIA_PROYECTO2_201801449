@@ -64,12 +64,14 @@ func AnalisisRmdisk(comando string) {
 					}
 				}
 			} else {
-
-				if strings.Compare(lineacomand[contador], " ") == 0 || strings.Compare(lineacomand[contador], "\n") == 0 {
-					break
-				} else {
-					valor_path += lineacomand[contador]
-					contador++
+				//simula un while
+				for strings.Compare(lineacomand[contador], "\n") != 0 {
+					if strings.Compare(lineacomand[contador], " ") == 0 || strings.Compare(lineacomand[contador], "\n") == 0 {
+						break
+					} else {
+						valor_path += lineacomand[contador]
+						contador++
+					}
 				}
 			}
 

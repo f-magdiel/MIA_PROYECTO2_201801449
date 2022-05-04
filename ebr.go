@@ -8,3 +8,7 @@ type Ebr struct {
 	Part_next   int64
 	Part_name   [16]byte
 }
+
+type Logica struct {
+	Logic [24]Ebr
+}
