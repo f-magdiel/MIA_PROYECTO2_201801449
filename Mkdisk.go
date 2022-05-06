@@ -153,7 +153,7 @@ func AnalisiMkdisk(comando string) {
 			valor_directorio += string(ele)
 		}
 	}
-	fmt.Println("Directorio ->>>> " + valor_directorio)
+
 	flag_directorio := validacionDirectorio(valor_directorio) // funcion que valida si existe el directorio
 	flag_disco := validacionArchivo(valor_path)               //funcion que valida si existe el disco
 

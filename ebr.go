@@ -9,6 +9,20 @@ type Ebr struct {
 	Part_name   [16]byte
 }
 
-type Logica struct {
-	Logic [24]Ebr
+type Disco struct {
+	id    int64
+	size  int64
+	path  string
+	Part  [4]Diskpart
+	Logic [24]Diskpart
+}
+
+type Diskpart struct {
+	id      string
+	size    int64
+	start   int64
+	name    string
+	path    string
+	tipo    string
+	mostrar string
 }

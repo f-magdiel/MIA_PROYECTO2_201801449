@@ -43,9 +43,12 @@ func AnalizadorComando(comando string) {
 		AnalisisFdisk(comando)
 
 	} else if strings.Compare(lineacomando, "mount") == 0 {
-		fmt.Println("Entro " + lineacomando)
+		AnalisisMount(comando)
+		MonstrarMount()
+
 	} else if strings.Compare(lineacomando, "rep") == 0 {
-		fmt.Println("Entro " + lineacomando)
+		AnalsisRep(comando)
+
 	} else if strings.Compare(lineacomando, "pause") == 0 {
 		fmt.Println("Entro " + lineacomando)
 	} else {
