@@ -168,17 +168,26 @@ func AnalisiMkdisk(comando string) {
 		}
 	} else { // no existe el directorio
 		fmt.Println("¡Directorio no existe!")
-		merr := os.Mkdir(valor_directorio, 0755)
+		SoloCrearDirectorio(valor_directorio)
+		/* merr := os.Mkdir(valor_directorio, 0755)
 		if merr != nil {
 			fmt.Println("Error al crear directorio -> " + valor_directorio)
 			log.Fatal(merr)
-		}
+		} */
 		fmt.Println("¡Directorio creado exitosamente!")
 		crearDisco(flag_size, flag_unit, flag_path, flag_fit, valor_size, valor_path, valor_unit, valor_fit)
 	}
 
 	//para leer el disco si se creo correctamente
 	LeerDisco(valor_path)
+}
+
+func SoloCrearDirectorio(valor_directorio string) {
+	merr := os.Mkdir(valor_directorio, 0755)
+	if merr != nil {
+		fmt.Println("Error al crear directorio -> " + valor_directorio)
+		log.Fatal(merr)
+	}
 }
 
 func validacionDirectorio(directorio string) bool {

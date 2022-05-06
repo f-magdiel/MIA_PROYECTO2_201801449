@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"math"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -15,6 +17,7 @@ import (
 var arraydisk [99]Disco //pendiente de montar y crear arreglos
 var abecedario [26]string = [26]string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
 var numeros [50]string = [50]string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"}
+var contadorDot = 0
 
 func AnalisisMount(comando string) {
 	contador := 0
@@ -330,15 +333,21 @@ func MonstrarMount() {
 		if arraydisk[i].size != 0 {
 			for j := 0; j < 4; j++ {
 				if strings.Compare(arraydisk[i].Part[j].tipo, "p") == 0 { // es de tipo primaria
-					fmt.Println(arraydisk[i].Part[j].path + "    |   " + arraydisk[i].Part[j].name + "   |   " + "#" + arraydisk[i].Part[j].id + "   |   " + arraydisk[i].Part[j].tipo)
+					if strings.Compare(arraydisk[i].Part[j].mostrar, "S") == 0 {
+						fmt.Println(arraydisk[i].Part[j].path + "    |   " + arraydisk[i].Part[j].name + "   |   " + "#" + arraydisk[i].Part[j].id + "   |   " + arraydisk[i].Part[j].tipo)
+					}
+
 				} else if strings.Compare(arraydisk[i].Part[j].tipo, "e") == 0 { //es de tipo extendida
 					//se buscarn en las logicas
-					fmt.Println(arraydisk[i].Part[j].path + "    |   " + arraydisk[i].Part[j].name + "   |    " + "#" + arraydisk[i].Part[j].id + "   |   " + arraydisk[i].Part[j].tipo)
-					for n := 0; n < 24; n++ {
+					if strings.Compare(arraydisk[i].Part[j].mostrar, "S") == 0 {
+						fmt.Println(arraydisk[i].Part[j].path + "    |   " + arraydisk[i].Part[j].name + "   |    " + "#" + arraydisk[i].Part[j].id + "   |   " + arraydisk[i].Part[j].tipo)
+					}
+
+					/* for n := 0; n < 24; n++ {
 						if strings.Compare(arraydisk[i].Logic[n].tipo, "l") == 0 {
 							fmt.Println(arraydisk[i].Logic[n].path + "    |   " + arraydisk[i].Logic[n].name + "    |   " + "#" + arraydisk[i].Logic[n].id + "   |   " + arraydisk[i].Logic[n].tipo)
 						}
-					}
+					} */
 				}
 			}
 		}
@@ -582,6 +591,98 @@ func generaReporte(f_name bool, f_id bool, f_path bool, _name string, _id string
 	contenido += ">];\n"
 	contenido += "}\n"
 	fmt.Println("Grafica.......................")
-	fmt.Println(contenido)
+	//fmt.Println(contenido)
 	fmt.Println("Fin Grafica......................")
+	//Se valida el directorio para guardar
+	cont_Diagonal := 0
+	for _, ele := range _path {
+		if strings.Compare(string(ele), "/") == 0 {
+			cont_Diagonal++
+		}
+	}
+
+	nuevo_directorio := ""
+	auxconta := 0
+	for _, ele := range _path {
+		if strings.Compare(string(ele), "/") == 0 {
+			nuevo_directorio += string(ele)
+			auxconta++
+			if cont_Diagonal == auxconta {
+				break
+			}
+		} else {
+			nuevo_directorio += string(ele)
+		}
+	}
+	fmt.Println("Direcotoro a crear=================" + nuevo_directorio)
+	flag_bandera := validacionGeneradorDirectorio(nuevo_directorio)
+	fmt.Println("Banderaaaaaaa")
+	fmt.Println(flag_bandera)
+	if flag_bandera == true { //ya existe
+		//solo se genera el reporte
+		contadorDot++
+		auxdot := strconv.Itoa(contadorDot)
+		f, err := os.Create("reporte" + auxdot + ".dot")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		l, err := f.WriteString(contenido)
+		if err != nil {
+			fmt.Println(err)
+			f.Close()
+			return
+		}
+		fmt.Println(l, "bytes written successfully")
+		err = f.Close()
+
+		//para renderizar el .dot
+		com, _ := exec.LookPath("dot")
+		cmd, _ := exec.Command(com, "-Tjpg", "reporte"+auxdot+".dot").Output()
+		mode := int(0777)
+		ioutil.WriteFile(_path, cmd, os.FileMode(mode))
+
+	} else { // no existe el directorio
+		fmt.Println("Se crea el directorio")
+		crearDirectorioRep(nuevo_directorio) // si se pudo
+		//se genera reporte
+		contadorDot++
+		auxdot := strconv.Itoa(contadorDot)
+		f, err := os.Create("reporte" + auxdot + ".dot")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		l, err := f.WriteString(contenido)
+		if err != nil {
+			fmt.Println(err)
+			f.Close()
+			return
+		}
+		fmt.Println(l, "bytes written successfully")
+		err = f.Close()
+
+		//para renderizar el .dot
+		com, _ := exec.LookPath("dot")
+		cmd, _ := exec.Command(com, "-Tjpg", "reporte"+auxdot+".dot").Output()
+		mode := int(0777)
+		ioutil.WriteFile(_path, cmd, os.FileMode(mode))
+	}
+}
+
+func validacionGeneradorDirectorio(directorio string) bool {
+	if _, err := os.Stat(directorio); !os.IsNotExist(err) {
+		return true
+	} else {
+		return false
+	}
+}
+
+func crearDirectorioRep(directorio string) { //error al crear el directori
+
+	errx := os.Mkdir(directorio, 0755)
+	if errx != nil {
+		fmt.Println("Error al crear directorio rep " + directorio)
+		log.Fatal(errx)
+	}
 }
