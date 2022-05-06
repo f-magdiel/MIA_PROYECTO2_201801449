@@ -462,7 +462,11 @@ func AnalsisRep(comando string) {
 		}
 	}
 	//se manda para generar reporte
-	generaReporte(flag_name, flag_id, flag_path, valor_name, valor_id, valor_path)
+	if strings.Compare(valor_name, "disk") == 0 {
+		fmt.Println("Se genera reporte Disk")
+		generaReporte(flag_name, flag_id, flag_path, valor_name, valor_id, valor_path)
+	}
+
 }
 
 func generaReporte(f_name bool, f_id bool, f_path bool, _name string, _id string, _path string) {

@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -50,7 +52,11 @@ func AnalizadorComando(comando string) {
 		AnalsisRep(comando)
 
 	} else if strings.Compare(lineacomando, "pause") == 0 {
-		fmt.Println("Entro " + lineacomando)
+		//pause
+		fmt.Println("Pause.............")
+		reader := bufio.NewReader(os.Stdin)
+		input, _ := reader.ReadString('\n')
+		fmt.Println(input)
 	} else {
 		fmt.Println("Error -> Comando invalido")
 	}

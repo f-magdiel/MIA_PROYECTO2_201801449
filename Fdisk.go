@@ -489,6 +489,8 @@ func crearParticion(_flag_size bool, _flag_unit bool, _flag_path bool, _flag_typ
 
 								}
 								break
+							} else {
+								fmt.Println("Error -> Al parecer no hay particion extendida")
 							}
 						}
 					} else {
