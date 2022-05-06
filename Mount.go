@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -195,11 +196,12 @@ func Montaje(name string, path string) {
 					if arraydisk[i].id > 0 {
 						auxcont = arraydisk[i-1].id //consulto el anterior
 					} else {
-						auxcont = arraydisk[i].id //consulto el anterior
+						auxcont = arraydisk[i].id //es primero
 						auxcont++
+						arraydisk[i].id = auxcont
 					}
 
-					arraydisk[i].id = auxcont
+					//arraydisk[i].id = auxcont
 					arraydisk[i].size = mbr.Mbr_tamano
 
 					//se valida que particiones están activas
@@ -217,7 +219,7 @@ func Montaje(name string, path string) {
 									//asigna al array -> ram
 									arraydisk[i].Part[l].id = auxid
 									auxid = ""
-									arraydisk[i].Part[l].name = name
+									arraydisk[i].Part[l].name = string(mbr.Partition[j].Part_name[:len(name)])
 									arraydisk[i].Part[l].path = path
 									arraydisk[i].Part[l].size = mbr.Partition[j].Part_size
 									arraydisk[i].Part[l].start = mbr.Partition[j].Part_start
@@ -227,7 +229,7 @@ func Montaje(name string, path string) {
 									break
 								}
 							}
-							break
+							//break
 						} else if strings.Compare(string(mbr.Partition[j].Part_status), "1") == 0 && strings.Compare(string(mbr.Partition[j].Part_type), "e") == 0 {
 							// es una extendida que puede contener o no logicas
 							//busco espacio en la ram
@@ -495,15 +497,17 @@ func generaReporte(f_name bool, f_id bool, f_path bool, _name string, _id string
 
 							size_p1 = int(arraydisk[i].Part[k].size)
 							op := (size_p1 * 100) / int(size_totaldisk)
+							res := float64(op)
+							res = math.Round(res)
 							suma += size_p1
 
-							contenido += strconv.FormatInt(int64(op), 10)
-							contenido += " % </td></tr>\n"
+							contenido += strconv.FormatFloat(res, 'f', 2, 64)
+							contenido += " % del disco</td></tr>\n"
 							contenido += "</table>\n"
 							contenido += "</td>\n"
 							size_p1 = 0
 						} else if strings.Compare(arraydisk[i].Part[k].tipo, "e") == 0 {
-							fmt.Println("Se genera primaria")
+							fmt.Println("Se genera enxtendida")
 							//conteido
 							contenido += "<td colspan='1' rowspan='1'>\n"
 							contenido += "<table color='red' border='1' cellborder='1' cellpadding='10' cellspacing='0'>\n"
@@ -515,22 +519,31 @@ func generaReporte(f_name bool, f_id bool, f_path bool, _name string, _id string
 							var sizebr int64
 
 							for l := 0; l < 24; l++ {
-								contenido += " <td>EBR</td><td>Logica1 <br/> "
 								if arraydisk[i].Logic[l].size != 0 {
+									contenido += " <td>EBR</td><td> Logica <br/> "
 									sizebr = arraydisk[i].Logic[l].size
+
 									reslog += int64(sizebr)
-									res := sizebr * 100 / int64(size_p2)
-									contenido += strconv.FormatInt(res, 10)
-									contenido += "% </td> "
+									//res := float64((sizebr * 100) / int64(size_p2))
+									op1 := float64(sizebr)
+									op2 := float32(size_totaldisk)
+									op3 := op1 * 100 / float64(op2)
+
+									contenido += strconv.FormatFloat(op3, 'f', 2, 64)
+									contenido += " % del disco </td> "
 								}
 							}
-
-							if reslog < sizebr {
-								var por int64 = sizebr - int64(reslog)
-								var resul int64 = por * 100 / int64(size_p2)
-								contenido += "<td>Libre <br/> "
-								contenido += strconv.FormatInt(resul, 10)
-								contenido += " % </td>"
+							fmt.Println("tamreslog ---- tamebr")
+							fmt.Println(reslog)
+							fmt.Println(size_p2)
+							if reslog < int64(size_p2) {
+								var por int64 = int64(size_p2) - int64(reslog)
+								var resul int64 = por * 100 / int64(size_totaldisk)
+								res := float64(resul)
+								res = math.Round(res)
+								contenido += "<td> Libre Logica <br/> "
+								contenido += strconv.FormatFloat(res, 'f', 2, 64)
+								contenido += " % del disco</td>"
 							}
 							contenido += "</tr>\n"
 							contenido += "</table>\n"
@@ -542,15 +555,17 @@ func generaReporte(f_name bool, f_id bool, f_path bool, _name string, _id string
 							if suma < int(size_totaldisk) {
 								var resfree int64 = size_totaldisk - int64(suma)
 								resfree = resfree * 100 / size_totaldisk
+								res := float64(resfree)
+								res = math.Round(res)
 								contenido += "<td colspan='1' rowspan='1'>\n"
 								contenido += "<table color='orange' border='1' cellborder='1' cellpadding='10' cellspacing='0'>\n"
 								contenido += "<tr><td>Libre <br/> "
-								contenido += strconv.FormatInt(resfree, 10)
-								contenido += "% </td></tr>\n"
+								contenido += strconv.FormatFloat(res, 'f', 2, 64)
+								contenido += "% del disco</td></tr>\n"
 								contenido += "</table>\n"
 								contenido += "</td>\n"
 							}
-							suma = 0
+							break
 						}
 					}
 					//break
